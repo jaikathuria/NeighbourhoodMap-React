@@ -24,7 +24,7 @@ export const GoogleApi = function(opts) {
         let url = URL;
         let params = {
             key: apiKey,
-            callback: 'CALLBACK_NAME',
+            callback: 'window.callback',
             libraries: libraries.join(','),
             client: client,
             v: googleVersion,

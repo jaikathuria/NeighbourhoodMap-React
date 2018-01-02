@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-
-import cache from './ScriptCache'
 import GoogleApi from './GoogleApi'
 
-const defaultMapConfig = {}
+window.callback = () => {}
+
 export const wrapper = (options) => (WrappedComponent) => {
   const apiKey = options.apiKey;
   const libraries = options.libraries || ['places'];
@@ -12,56 +10,66 @@ export const wrapper = (options) => (WrappedComponent) => {
   class Wrapper extends Component {
     constructor(props, context) {
       super(props, context);
-
       this.state = {
         loaded: false,
-        map: null,
         google: null
       }
     }
 
-    componentDidMount() {
-      const refs = this.refs;
-      this.scriptCache.google.onLoad((err, tag) => {
-        const maps = window.google.maps;
-        this.props = Object.assign({}, this.props, {
-          loaded: this.state.loaded
-        });
-
-        const mapRef = refs.map;
-
-        const node = ReactDOM.findDOMNode(mapRef);
-        let center = new maps.LatLng(this.props.lat, this.props.lng)
-
-        let mapConfig = Object.assign({}, defaultMapConfig, {
-          center, zoom: this.props.zoom
+    error = (err) => {
+        this.setState({
+            loaded: false,
+            google: window.google,
+            error: err
         })
+    }
+     componentDidMount(){
+      new Promise((resolve,reject) => {
+          try {
+              let body = document.getElementsByTagName('body')[0]
+              let tag = document.createElement('script');
+              tag.type = 'text/javascript';
+              tag.async = true;
+              tag.onload = resolve
+              tag.onerror = this.error
+              const src = GoogleApi({
+                  apiKey: apiKey,
+                  libraries: libraries
+              })
+              tag.src = src
+              body.appendChild(tag);
+          }
+          catch (err) {
+              this.setState({
+                  loaded: false,
+                  google: window.google,
+                  error: err
+              })
+          }
 
-        this.map = new maps.Map(node, mapConfig);
-
+      }).then(() => {
         this.setState({
           loaded: true,
-          map: this.map,
-          google: window.google
+          google: window.google,
+          error: null
         })
-      });
+      })
+      .catch(error => {
+        console.log("Prmise Rejected")
+        this.setState({
+            loaded: false,
+            google: window.google,
+            error: error
+        })
+      })
     }
 
-    componentWillMount() {
-      this.scriptCache = cache({
-        google: GoogleApi({
-          apiKey: apiKey,
-          libraries: libraries
-        })
-      });
-    }
+
 
     render() {
       const props = Object.assign({}, this.props, {
         loaded: this.state.loaded,
-        map: this.state.map,
         google: this.state.google,
-        mapComponent: this.refs.map
       })
       return (
         <div>
@@ -72,7 +80,7 @@ export const wrapper = (options) => (WrappedComponent) => {
     }
   }
 
-  return Wrapper;
+  return Wrapper
 }
 
-export default wrapper;
+export default wrapper

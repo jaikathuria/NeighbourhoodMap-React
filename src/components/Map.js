@@ -4,9 +4,6 @@ import ReactDOM from 'react-dom'
 
 export default class Map extends Component {
 
-    state = {
-        mapLoaded: false
-    }
 
     componentDidUpdate(prevProps) {
         if (prevProps.google !== this.props.google) {
@@ -44,7 +41,7 @@ export default class Map extends Component {
                 width: '100vw',
                 height: '100vh'
             }}>
-
+            Loading Google Maps . . .
             </div>
         )
     }
