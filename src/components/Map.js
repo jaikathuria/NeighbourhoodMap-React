@@ -38,7 +38,7 @@ export default class Map extends Component {
     render() {
         return (
             <div ref='map' className={'map'}>
-            Loading Google Maps . . .
+                { this.props.error ? (<p className={"map-message"}>Failed to Load Google Maps</p>) : (<p className={"map-message"}>Loading Google Maps . . .</p>) }
             </div>
         )
     }

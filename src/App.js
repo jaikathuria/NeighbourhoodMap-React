@@ -30,13 +30,13 @@ class App extends Component {
 
 
     return (
-      <div className="App">
+      <main className="App">
         <Nav/>
         <SideBar map={this.state.map} locations={locations} google={this.props.google}/>
         <div style={style} role={'application'}>
-          <Map google={this.props.google} isLoaded={this.load}/>
+          <Map google={this.props.google} isLoaded={this.load} error={this.props.error}/>
         </div>
-      </div>
+      </main>
     )
   }
 }

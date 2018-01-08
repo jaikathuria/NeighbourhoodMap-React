@@ -1,11 +1,11 @@
 import React from 'react'
 
 const Nav = () => (
-    <nav className="nav">
+    <header className="nav">
 
         <a className="brand"> My Neighbourhood </a>
 
-    </nav>
+    </header>
 )
 
 export default Nav;

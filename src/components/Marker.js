@@ -49,22 +49,32 @@ export default class Marker extends Component {
             };
 
             this.marker = new google.maps.Marker(pref)
-            this.marker.addListener('click',this.handleClick);
+            this.marker.addListener('click',this.selectMarker);
         }
 
     }
 
 
-    handleClick = () => {
+    selectMarker = () => {
         this.marker.setAnimation( this.props.google.maps.Animation.BOUNCE)
         setTimeout(() => { this.marker.setAnimation(null) }, 900)
         this.props.changeSelected(this.marker)
         this.props.onClk()
     }
 
+    keyPress = e => {
+        if(e.key === 'Enter'){
+            this.selectMarker()
+        }
+    }
+
     render() {
         return (
-            <a tabIndex="0" onClick={this.handleClick} className="menu-item"> { this.props.loc.name }</a>
+            <a tabIndex="0"
+               role={'button'}
+               onClick={this.selectMarker}
+               onKeyPress={this.selectMarker}
+               className="menu-item"> { this.props.loc.name } </a>
         )
     }
 }
