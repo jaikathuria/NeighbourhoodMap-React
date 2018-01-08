@@ -46,7 +46,7 @@ export const wrapper = (options) => (WrappedComponent) => {
                   error: null
                 })
             })
-            .catch(error => {
+                .catch(error => {
                 this.setState({
                     loaded: false,
                     google: window.google,
