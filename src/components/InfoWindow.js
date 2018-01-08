@@ -19,9 +19,10 @@ export default class InfoWindow extends Component {
     openWindow() {
         if (this.props.marker) {
             this.infoWindow.setContent(`
-                <div>
+                <div role={'location-info'}>
                     <h3> ${this.props.marker.name} </h3>
                     <p> Rating: ${this.props.marker.rating}/10 </p>
+                    ${this.props.marker.url ? `<a href="${this.props.marker.url}" target="_blank"> Read More </a>` : `No Info Available`}
                 </div>
             `)
             this.infoWindow.open(this.props.map, this.props.marker)

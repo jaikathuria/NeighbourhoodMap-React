@@ -33,7 +33,7 @@ class App extends Component {
       <div className="App">
         <Nav/>
         <SideBar map={this.state.map} locations={locations} google={this.props.google}/>
-        <div style={style}>
+        <div style={style} role={'application'}>
           <Map google={this.props.google} isLoaded={this.load}/>
         </div>
       </div>

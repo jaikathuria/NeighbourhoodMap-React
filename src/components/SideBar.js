@@ -49,6 +49,7 @@ export default class SideBar extends Component {
             <Menu
                 isOpen={this.state.menuOpen}
                 onStateChange={(state) => this.handleStateChange(state)}
+                role={'menu'}
             >
                 <div className="form-group">
                     <input type="text" value={this.state.query} onChange={this.handleQueryChange}/>

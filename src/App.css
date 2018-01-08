@@ -140,6 +140,11 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
     width:50%;
 }
 
+.map {
+    height: 100vh;
+    width: 100vw;
+}
+
 /* HIGHLIGHTER ================================== */
 .highlight {
     position:absolute;

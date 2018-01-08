@@ -37,10 +37,7 @@ export default class Map extends Component {
 
     render() {
         return (
-            <div ref='map' style = {{
-                width: '100vw',
-                height: '100vh'
-            }}>
+            <div ref='map' className={'map'}>
             Loading Google Maps . . .
             </div>
         )

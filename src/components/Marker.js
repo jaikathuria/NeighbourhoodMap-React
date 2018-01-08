@@ -14,9 +14,15 @@ export default class Marker extends Component {
             .then(res => {
                 if(res.hasOwnProperty('rating')){
                     this.marker.rating =  res.rating
+
                 }
                 else{
-                    this.marker.rating = "Error in fetching rating!"
+                    this.marker.rating = "Rating Not Available "
+                }
+                if(res.hasOwnProperty('shortUrl')){
+                    this.marker.url = res.shortUrl
+                }else{
+                    this.marker.url= "URL not Available"
                 }
             }).catch(()=>{
                 this.marker.rating = "Error in fetching rating!"
@@ -58,7 +64,7 @@ export default class Marker extends Component {
 
     render() {
         return (
-            <a onClick={this.handleClick} className="menu-item"> { this.props.loc.name }</a>
+            <a tabIndex="0" onClick={this.handleClick} className="menu-item"> { this.props.loc.name }</a>
         )
     }
 }
